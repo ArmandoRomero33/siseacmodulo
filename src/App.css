@@ -20,8 +20,11 @@ form {
 
 label,
 input {
+  margin-top: 1cm;
   margin: 5px;
 }
+
+
 
 button {
   margin-top: 20px;

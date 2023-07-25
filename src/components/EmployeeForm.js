@@ -113,6 +113,7 @@ const EmployeeForm = () => {
         </label>
 
         <label>
+          
           Género:
           <input
             type="radio"
@@ -130,6 +131,14 @@ const EmployeeForm = () => {
             onChange={handleInputChange}
           />{' '}
           Femenino
+          <input
+            type="radio"
+            name="genero"
+            value="otro"
+            checked={formData.genero === 'otro'}
+            onChange={handleInputChange}
+          />{' '}
+          Otro
         </label>
       </fieldset>
 
@@ -147,7 +156,9 @@ const EmployeeForm = () => {
             <option value="secundaria">Secundaria</option>
             <option value="preparatoria">Preparatoria</option>
             <option value="universidad">Universidad</option>
-            <option value="posgrado">Posgrado</option>
+            <option value="licenciatura">licenciatura</option>
+            <option value="maestria">Maestria</option>
+            <option value="doctorado">Doctorado</option>
           </select>
         </label>
 
