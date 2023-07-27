@@ -20,7 +20,7 @@ form {
 
 label,
 input {
-  margin-top: 1cm;
+  
   margin: 5px;
 }
 
@@ -37,4 +37,16 @@ button {
 
 button:hover {
   background-color: #0056b3;
+}
+
+a{
+  margin-top: 10px;
+  border-radius: 55px;
+  padding: 8px 16px;
+  font-size: 1rem;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
 }

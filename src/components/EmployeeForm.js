@@ -1,17 +1,22 @@
+
 import React, { useState } from 'react';
+import axios from 'axios';
 import './EmployeeForm.css';
+
 
 const EmployeeForm = () => {
   const [formData, setFormData] = useState({
     numeroEmpleado: '',
     nivelEducacion: '',
     profesion: '',
-    nombre: '',
+    nombre1: '',
+    nombre2: '',
     apellido1: '',
     apellido2: '',
     foto: null,
     genero: '',
     correo: '',
+    telefono: '',
     materiasDespliege: [],
     estado: '',
     municipio: '',
@@ -46,8 +51,17 @@ const EmployeeForm = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // Aquí puedes enviar los datos al servidor o hacer lo que necesites con ellos
-    console.log(formData);
+
+    // Enviar los datos al servidor (solicitud POST)
+    axios.post('http://localhost:5000/api/empleado', formData)
+      .then((response) => {
+        // Aquí puedes manejar la respuesta del servidor si es necesario
+        console.log(response.data);
+      })
+      .catch((error) => {
+        // Manejo de errores si la solicitud al servidor falla
+        console.error('Error al enviar los datos:', error);
+      });
   };
 
   return (
@@ -56,22 +70,24 @@ const EmployeeForm = () => {
         <legend>Información Personal</legend>
 
         <fieldset>
-        <legend>Foto</legend>
-        <label>
-          Cargar Foto:
-          <input
-            type="file"
-            name="foto"
-            accept="image/*"
-            onChange={handleFileChange}
-          />
-        </label>
-        {formData.foto && (
-          <div className="photo-preview">
-            <img src={URL.createObjectURL(formData.foto)} alt="Foto de perfil" />
-          </div>
-        )}
-      </fieldset>
+          <legend>Foto</legend>
+          <label>
+            Cargar Foto:
+            <input
+              type="file"
+              name="foto"
+              accept="image/*"
+              onChange={handleFileChange}
+            />
+          </label>
+          {formData.foto && (
+            <div className="photo-preview">
+              <img src={URL.createObjectURL(formData.foto)} alt="Foto de perfil" />
+            </div>
+          )}
+        </fieldset>
+
+        {/* Resto de campos de Información Personal */}
         <label>
           Número de Empleado:
           <input
@@ -83,11 +99,20 @@ const EmployeeForm = () => {
         </label>
 
         <label>
-          Nombre:
+          Primer Nombre:
           <input
             type="text"
-            name="nombre"
-            value={formData.nombre}
+            name="nombre1"
+            value={formData.nombre1}
+            onChange={handleInputChange}
+          />
+        </label>
+        <label>
+          Segundo Nombre:
+          <input
+            type="text"
+            name="nombre2"
+            value={formData.nombre2}
             onChange={handleInputChange}
           />
         </label>
@@ -199,6 +224,19 @@ const EmployeeForm = () => {
             onChange={handleInputChange}
           />
         </label>
+        <label>
+          Telefono:
+          <input
+            type="tel"
+            name="telefono"
+            value={formData.telefono}
+            onChange={handleInputChange}
+          />
+        </label>
+
+        
+
+       
       </fieldset>
 
       <fieldset>
@@ -259,11 +297,12 @@ const EmployeeForm = () => {
         </label>
       </fieldset>
 
-      
+
 
       <br />
       <button type="submit">Enviar</button>
     </form>
+    
   );
 };
 
