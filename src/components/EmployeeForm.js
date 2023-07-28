@@ -5,19 +5,7 @@ import './EmployeeForm.css';
 
 
 const EmployeeForm = () => {
-
-
-  
-    <div className="App">
-      <header className="App-header">
-        <h1>Formulario de Empleados</h1>
-      </header>
-      <main>
-        <EmployeeForm />
-      </main>
-    </div>
-  
-
+ 
   const [formData, setFormData] = useState({
     numeroEmpleado: '',
     nivelEducacion: '',
@@ -28,6 +16,10 @@ const EmployeeForm = () => {
     apellido2: '',
     foto: null,
     genero: '',
+    
+    fechanacimineto: '',
+    edad: '',
+
     correo: '',
     telefono: '',
     materiasDespliege: [],
@@ -54,14 +46,21 @@ const EmployeeForm = () => {
     });
   };
 
-  const handleMateriasChange = (event) => {
-    const selectedOptions = Array.from(event.target.selectedOptions, (option) => option.value);
-    setFormData({
-      ...formData,
-      materiasDespliege: selectedOptions
-    });
-  };
-
+  
+const handleMateriasChange = (event) => {
+  const { name, value, checked } = event.target;
+  if (checked) {
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      materiasDespliege: [...prevFormData.materiasDespliege, value],
+    }));
+  } else {
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      materiasDespliege: prevFormData.materiasDespliege.filter((materia) => materia !== value),
+    }));
+  }
+};
   const handleSubmit = (event) => {
     event.preventDefault();
 
@@ -149,6 +148,14 @@ const EmployeeForm = () => {
             onChange={handleInputChange}
           />
         </label>
+        <label>
+          Edad:
+          <input
+          type="Text"
+          name="edad"
+          value={formData.edad}
+          onChange={handleInputChange}/>
+        </label>
 
         <label>
           
@@ -210,20 +217,54 @@ const EmployeeForm = () => {
           />
         </label>
 
-        <label>
-          Materias de Despliegue:
-          <select
-            multiple
-            name="materiasDespliege"
-            value={formData.materiasDespliege}
-            onChange={handleMateriasChange}
-          >
-            <option value="matematicas">Matemáticas</option>
-            <option value="ciencias">Ciencias</option>
-            <option value="historia">Historia</option>
-            <option value="ingles">Inglés</option>
-          </select>
-        </label>
+
+        <div>
+    <span>Materias de Despliegue:</span>
+    <div className="subject-list">
+      <label>
+        <input
+          type="checkbox"
+          name="materiasDespliege"
+          value="matematicas"
+          checked={formData.materiasDespliege.includes('matematicas')}
+          onChange={handleMateriasChange}
+        />
+        Matemáticas
+      </label>
+      <label>
+        <input
+          type="checkbox"
+          name="materiasDespliege"
+          value="ciencias"
+          checked={formData.materiasDespliege.includes('ciencias')}
+          onChange={handleMateriasChange}
+        />
+        Ciencias
+      </label>
+      <label>
+        <input
+          type="checkbox"
+          name="materiasDespliege"
+          value="historia"
+          checked={formData.materiasDespliege.includes('historia')}
+          onChange={handleMateriasChange}
+        />
+        Historia
+      </label>
+      <label>
+        <input
+          type="checkbox"
+          name="materiasDespliege"
+          value="ingles"
+          checked={formData.materiasDespliege.includes('ingles')}
+          onChange={handleMateriasChange}
+        />
+        Inglés
+      </label>
+    </div>
+  </div>
+
+        
       </fieldset>
 
       <fieldset>
@@ -240,7 +281,7 @@ const EmployeeForm = () => {
         <label>
           Telefono:
           <input
-            type="tel"
+            type="text"
             name="telefono"
             value={formData.telefono}
             onChange={handleInputChange}
